@@ -35,3 +35,18 @@ it('increments strike count by 1', () => {
   fireEvent.click(button);
   expect(strikeDisplayText).toHaveTextContent('Strikes: 0');
 })
+
+it('increments strike by 1 on foul unless strikes === 2', () => {
+  const { getByTestId } = render(<App />);
+  const button = getByTestId('foul-btn');
+  const strikeDisplayText = getByTestId('strike-display');
+
+  fireEvent.click(button);
+  expect(strikeDisplayText).toHaveTextContent('Strikes: 1');
+
+  fireEvent.click(button);
+  expect(strikeDisplayText).toHaveTextContent('Strikes: 2');
+
+  fireEvent.click(button);
+  expect(strikeDisplayText).toHaveTextContent('Strikes: 2');
+})
