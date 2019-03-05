@@ -1,28 +1,79 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+import Dashboard from "./components/dashboard/Dashboard";
+import Display from "./components/display/Display";
+
+import "./App.css";
+
+const App = props => {
+  // state = {
+  //   strike: 0,
+  //   ball: 0
+  // }
+  const [gameInfo, setGameInfo] = useState({
+    strike: 0,
+    ball: 0
+  });
+
+  const addStrike = e => {
+    e.preventDefault();
+    if (gameInfo.strike >= 2) {
+      setGameInfo({
+        ball: 0,
+        strike: 0
+      });
+    } else {
+      setGameInfo({
+        ...gameInfo,
+        strike: ++gameInfo.strike
+      });
+    }
+  };
+
+  const addBall = e => {
+    e.preventDefault();
+    if (gameInfo.ball >= 3) {
+      setGameInfo({
+        ball: 0,
+        strike: 0
+      });
+    } else {
+      setGameInfo({
+        ...gameInfo,
+        ball: ++gameInfo.ball
+      });
+    }
+  };
+
+  const foul = e => {
+    e.preventDefault();
+    if (gameInfo.strike < 2) {
+      setGameInfo({
+        ...gameInfo,
+        strike: ++gameInfo.strike
+      });
+    }
+  };
+
+  const hit = e => {
+    e.preventDefault();
+    setGameInfo({
+      ball: 0,
+      strike: 0
+    });
+  };
+
+  return (
+    <div className="App">
+      <Display gameInfo={gameInfo} />
+      <Dashboard
+        addStrike={addStrike}
+        addBall={addBall}
+        foul={foul}
+        hit={hit}
+      />
+    </div>
+  );
+};
 
 export default App;
