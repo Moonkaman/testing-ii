@@ -50,3 +50,16 @@ it('increments strike by 1 on foul unless strikes === 2', () => {
   fireEvent.click(button);
   expect(strikeDisplayText).toHaveTextContent('Strikes: 2');
 })
+
+it('resets balls and strikes on hit', () => {
+  const { getByTestId } = render(<App />);
+  const button = getByTestId('hit-btn');
+  const strikeBtn = getByTestId('strike-btn');
+  const strikeDisplayText = getByTestId('strike-display');
+  const ballDisplayText = getByTestId('ball-display');
+
+  fireEvent.click(strikeBtn);
+  fireEvent.click(button);
+  expect(strikeDisplayText).toHaveTextContent('Strikes: 0');
+  expect(ballDisplayText).toHaveTextContent('Balls: 0');
+})
