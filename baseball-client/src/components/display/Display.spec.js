@@ -4,7 +4,7 @@ import 'jest-dom/extend-expect';
 
 import Display from './Display';
 
-describe('<Display />', () => {
+describe('<Display />', () => { 
   it('displays "No Game Info" if none is provided', () => {
     const { getByText } = render(<Display />);
     expect(getByText(/no game info/i)).toBeInTheDocument();
